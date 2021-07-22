@@ -9,14 +9,19 @@ using System.Threading.Tasks;
 
 namespace DatingApp_API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
+   
+    public class UsersController : BaseApiController
     {
         public DataContext _dataContext { get; set; }
         public UsersController(DataContext dataContext)
         {
             _dataContext = dataContext;
+        }
+        [HttpGet]
+        public ActionResult<IEnumerable< AppUser>> GetAll()
+        {
+            var user = _dataContext.Users.ToList();
+            return user;
         }
         [HttpGet("{id}")]
         public ActionResult<AppUser> GetUsers(int id)
