@@ -1,5 +1,6 @@
 ﻿using DatingApp_API.Data;
 using DatingApp_API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,6 +24,7 @@ namespace DatingApp_API.Controllers
             var user = _dataContext.Users.ToList();
             return user;
         }
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<AppUser> GetUsers(int id)
         {
