@@ -48,7 +48,8 @@ namespace DatingApp_API.Controllers
         
         }
         [HttpPost("Login")]
-        public async Task<ActionResult<UserDTO>> Login(LoginDTO login) {
+        public async Task<ActionResult<UserDTO>> Login(LoginDTO login) 
+        {
             var user = await _dataContext.Users.SingleOrDefaultAsync(x => x.Username == login.UserName.ToLower());
             if(user == null)
             { return Unauthorized("userame is incorrect"); }
@@ -56,7 +57,7 @@ namespace DatingApp_API.Controllers
             var PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(login.Password));
             for (int i = 0; i < PasswordHash.Length; i++)
             {
-                if (PasswordHash[i] == user.PasswordHash[i])
+                if (PasswordHash[i] != user.PasswordHash[i])
                     return Unauthorized("Password is incorrect");
             }
 
